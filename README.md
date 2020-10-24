@@ -1,6 +1,6 @@
-# React Finland XState Workshop
+# Frontend Masters React State Modeling Workshop
 
-Welcome to the React Finland workshop on **Modeling React Applications with Statecharts**!
+Welcome to the [Frontend Masters React + XState workshop!](todo)
 
 ## XState
 
@@ -22,4 +22,3 @@ To run this workshop:
 Exercises are separated by directory in `src/##`. Each directory will contain a `README.md` describing the goal of the exercise, as well as tips and comments in the `Timer.js` and `timerMachine.js` files.
 
 Your objective is to accomplish the goals in `README.md`. If you get stuck, refer to the `Timer.final.js` and/or `timerMachine.final.js` files in each directory.
-
