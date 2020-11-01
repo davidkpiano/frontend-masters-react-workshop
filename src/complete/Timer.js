@@ -7,7 +7,7 @@ import { useMachine, useService } from '@xstate/react';
 import { createTimerMachine } from './timerMachine';
 import { ProgressCircle } from '../ProgressCircle';
 
-export const Timer = ({ onDelete, timerRef }) => {
+export const Timer = ({ onDelete, onAdd, timerRef, ...attrs }) => {
   const [state, send] = useService(timerRef);
 
   const { duration, elapsed, interval } = state.context;
@@ -22,6 +22,7 @@ export const Timer = ({ onDelete, timerRef }) => {
         '--elapsed': elapsed,
         '--interval': interval,
       }}
+      {...attrs}
     >
       <header>
         <a
@@ -72,6 +73,14 @@ export const Timer = ({ onDelete, timerRef }) => {
             <FontAwesomeIcon icon={faPlay} />
           </button>
         )}
+        <button
+          className="transparent"
+          onClick={() => {
+            onAdd();
+          }}
+        >
+          Add Timer
+        </button>
       </div>
     </div>
   );

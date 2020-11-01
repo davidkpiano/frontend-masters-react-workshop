@@ -31,7 +31,9 @@ body,
   grid-template-rows: 1fr;
   overflow: hidden;
 
-  > * {
+  > .timers,
+  .timer,
+  .new-timer {
     grid-area: 1 / 1;
     transition: transform 0.6s ease-in-out, opacity 0.3s ease-out;
   }
@@ -142,6 +144,10 @@ input[type='number']::-webkit-outer-spin-button {
   &[data-state~='running.normal'],
   &[data-state~='paused'] {
     --progress: calc((var(--elapsed) + var(--interval)) / var(--duration));
+  }
+
+  &:not([data-active]) {
+    display: none;
   }
 }
 

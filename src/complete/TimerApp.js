@@ -9,25 +9,46 @@ const timerAppMachine = createMachine({
   initial: 'new',
   context: {
     duration: 0,
+    currentTimer: -1,
     timers: [],
   },
   states: {
     new: {},
     timer: {
       on: {
-        DELETE: 'new',
+        DELETE: {
+          actions: assign((ctx) => {
+            const timers = ctx.timers.slice(0, -1);
+            const currentTimer = timers.length - 1;
+
+            return {
+              timers,
+              currentTimer,
+            };
+          }),
+          target: 'deleting',
+        },
       },
+    },
+    deleting: {
+      always: [
+        { target: 'new', cond: (ctx) => ctx.timers.length === 0 },
+        { target: 'timer' },
+      ],
     },
   },
   on: {
     ADD: {
       target: '.timer',
-      actions: assign({
-        timers: (ctx) => {
-          const newTimer = spawn(createTimerMachine(60));
+      actions: assign((ctx) => {
+        const newTimer = spawn(createTimerMachine(60));
 
-          return ctx.timers.concat(newTimer);
-        },
+        const timers = ctx.timers.concat(newTimer);
+
+        return {
+          timers,
+          currentTimer: timers.length - 1,
+        };
       }),
     },
   },
@@ -36,8 +57,6 @@ const timerAppMachine = createMachine({
 export const TimerApp = () => {
   const [state, send] = useMachine(timerAppMachine);
 
-  console.log(state.context);
-
   return (
     <main className="app" data-state={state.toStrings().join(' ')}>
       <NewTimer
@@ -45,31 +64,23 @@ export const TimerApp = () => {
           send({ type: 'ADD', duration });
         }}
       />
-      {state.context.timers.map((timer) => {
-        return (
-          <Timer
-            timerRef={timer}
-            onDelete={() => {
-              send('DELETE');
-            }}
-          />
-        );
-      })}
-      {/* {state.matches('timer') && (
-        <Timer
-          duration={state.context.duration}
-          onDelete={() => {
-            send('DELETE');
-          }}
-        />
-      )}{' '} */}
-      <button
-        className="transparent"
-        style={{ position: 'absolute' }}
-        onClick={() => send('ADD')}
-      >
-        Add Timer
-      </button>
+      <div className="timers">
+        {state.context.timers.map((timer, i) => {
+          return (
+            <Timer
+              key={timer.id}
+              timerRef={timer}
+              onDelete={() => {
+                send('DELETE');
+              }}
+              onAdd={() => {
+                send('ADD');
+              }}
+              data-active={i === state.context.currentTimer || undefined}
+            />
+          );
+        })}
+      </div>
     </main>
   );
 };
