@@ -51,6 +51,11 @@ const timerAppMachine = createMachine({
         };
       }),
     },
+    SWITCH: {
+      actions: assign({
+        currentTimer: (_, event) => event.index,
+      }),
+    },
   },
 });
 
@@ -78,6 +83,20 @@ export const TimerApp = () => {
               }}
               data-active={i === state.context.currentTimer || undefined}
             />
+          );
+        })}
+      </div>
+      <div className="dots">
+        {state.context.timers.map((timer, i) => {
+          return (
+            <div
+              className="dot"
+              data-active={i === state.context.currentTimer || undefined}
+              key={i}
+              onClick={() => {
+                send({ type: 'SWITCH', index: i });
+              }}
+            ></div>
           );
         })}
       </div>
