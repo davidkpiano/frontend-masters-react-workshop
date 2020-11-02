@@ -66,6 +66,10 @@ body,
     width: 5rem;
     height: 100%;
   }
+
+  .timer:not([data-active]) {
+    display: none;
+  }
 }
 
 .dots {
@@ -73,6 +77,12 @@ body,
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  transition: all 0.3s;
+
+  &[hidden] {
+    opacity: 0;
+    transform: translateX(100%);
+  }
 }
 
 .dot {
@@ -83,7 +93,7 @@ body,
   margin: 0.5rem 0;
 
   &[data-active] {
-    background: var(--color-primary);
+    background: white;
   }
 }
 
@@ -172,17 +182,13 @@ input[type='number']::-webkit-outer-spin-button {
   &[data-state~='paused'] {
     --progress: calc((var(--elapsed) + var(--interval)) / var(--duration));
   }
-
-  &:not([data-active]) {
-    display: none;
-  }
 }
 
 .actions {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   align-items: center;
+  justify-items: center;
 
   > button:not(.transparent) {
     appearance: none;

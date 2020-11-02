@@ -30,7 +30,7 @@ const newTimerMachine = createMachine({
   },
 });
 
-export const NewTimer = ({ onSubmit }) => {
+export const NewTimer = ({ onSubmit, onCancel }) => {
   const [state, send] = useMachine(newTimerMachine, {
     actions: {
       submit: (context) => {
@@ -57,6 +57,18 @@ export const NewTimer = ({ onSubmit }) => {
         title="Duration"
       />
       <div className="actions">
+        {onCancel ? (
+          <button
+            className="transparent"
+            onClick={() => {
+              onCancel();
+            }}
+          >
+            Cancel
+          </button>
+        ) : (
+          <div></div>
+        )}
         <button
           onClick={() => {}}
           title={`Start ${state.context.duration} second timer`}

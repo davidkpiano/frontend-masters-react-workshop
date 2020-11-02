@@ -13,7 +13,11 @@ const timerAppMachine = createMachine({
     timers: [],
   },
   states: {
-    new: {},
+    new: {
+      on: {
+        CANCEL: 'timer',
+      },
+    },
     timer: {
       on: {
         DELETE: {
@@ -40,8 +44,8 @@ const timerAppMachine = createMachine({
   on: {
     ADD: {
       target: '.timer',
-      actions: assign((ctx) => {
-        const newTimer = spawn(createTimerMachine(60));
+      actions: assign((ctx, event) => {
+        const newTimer = spawn(createTimerMachine(event.duration));
 
         const timers = ctx.timers.concat(newTimer);
 
@@ -51,6 +55,7 @@ const timerAppMachine = createMachine({
         };
       }),
     },
+    CREATE: 'new',
     SWITCH: {
       actions: assign({
         currentTimer: (_, event) => event.index,
@@ -61,6 +66,7 @@ const timerAppMachine = createMachine({
 
 export const TimerApp = () => {
   const [state, send] = useMachine(timerAppMachine);
+  const { timers } = state.context;
 
   return (
     <main className="app" data-state={state.toStrings().join(' ')}>
@@ -68,8 +74,16 @@ export const TimerApp = () => {
         onSubmit={(duration) => {
           send({ type: 'ADD', duration });
         }}
+        onCancel={
+          timers.length
+            ? () => {
+                send('CANCEL');
+              }
+            : undefined
+        }
+        key={timers.length}
       />
-      <div className="timers">
+      <div className="timers" hidden={!state.matches('timer')}>
         {state.context.timers.map((timer, i) => {
           return (
             <Timer
@@ -79,14 +93,14 @@ export const TimerApp = () => {
                 send('DELETE');
               }}
               onAdd={() => {
-                send('ADD');
+                send('CREATE');
               }}
               data-active={i === state.context.currentTimer || undefined}
             />
           );
         })}
       </div>
-      <div className="dots">
+      <div className="dots" hidden={!state.matches('timer')}>
         {state.context.timers.map((timer, i) => {
           return (
             <div
