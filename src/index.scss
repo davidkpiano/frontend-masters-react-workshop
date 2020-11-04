@@ -3,6 +3,7 @@
 @import './styles/dots.scss';
 @import './styles/newTimer.scss';
 @import './styles/scratch.scss';
+@import './styles/alarm.scss';
 
 *,
 *:before,
@@ -31,6 +32,7 @@ body,
   --color-primary: #5192e6;
   --color-primary-light: hsla(214, 75%, 72%, 1);
   --color-secondary: #8b9096;
+  --color-gray: #373b41;
 }
 
 #root {
@@ -107,7 +109,7 @@ body,
   display: flex;
   flex-direction: row;
   justify-content: stretch;
-  background-color: #222427;
+  background-color: var(--color-gray);
 }
 
 .app-tab {
