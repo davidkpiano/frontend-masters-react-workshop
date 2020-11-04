@@ -14,40 +14,65 @@ import { Timer as Timer06 } from './06/Timer';
 import { Timer as Timer07 } from './07/Timer';
 import { TimerApp as TimerApp08 } from './08/TimerApp';
 import { TimerApp } from './complete/TimerApp';
+import { Exercise } from './Exercise';
+
+function getMarkdownLink(exercise) {
+  return require(`./${exercise}/README.md`).default;
+}
 
 function App() {
   return (
     <Router>
       <Switch>
         <Route path="/00">
-          <Timer00 />
+          <Exercise markdown={getMarkdownLink('00')}>
+            <Timer00 />
+          </Exercise>
         </Route>
         <Route path="/01">
-          <Timer01 />
+          <Exercise markdown={getMarkdownLink('01')}>
+            <Timer01 />
+          </Exercise>
         </Route>
         <Route path="/02">
-          <Timer02 />
+          <Exercise markdown={getMarkdownLink('02')}>
+            <Timer02 />
+          </Exercise>
         </Route>
         <Route path="/03">
-          <Timer03 />
+          <Exercise markdown={getMarkdownLink('03')}>
+            <Timer03 />
+          </Exercise>
         </Route>
         <Route path="/04">
-          <Timer04 />
+          <Exercise markdown={getMarkdownLink('04')}>
+            <Timer04 />
+          </Exercise>
         </Route>
         <Route path="/05">
-          <Timer05 />
+          <Exercise markdown={getMarkdownLink('05')}>
+            <Timer05 />
+          </Exercise>
         </Route>
         <Route path="/06">
-          <Timer06 />
+          <Exercise markdown={getMarkdownLink('06')}>
+            <Timer06 />
+          </Exercise>
         </Route>
         <Route path="/07">
-          <Timer07 />
+          <Exercise markdown={getMarkdownLink('07')}>
+            <Timer07 />
+          </Exercise>
         </Route>
         <Route path="/08">
-          <TimerApp08 />
+          <Exercise markdown={getMarkdownLink('08')}>
+            <TimerApp08 />
+          </Exercise>
         </Route>
         <Route path="/complete">
-          <TimerApp />
+          <Exercise markdown={getMarkdownLink('complete')}>
+            <TimerApp />
+          </Exercise>
         </Route>
       </Switch>
     </Router>

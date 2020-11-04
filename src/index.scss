@@ -1,5 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400&display=swap');
 
+*,
+*:before,
+*:after {
+  box-sizing: border-box;
+  position: relative;
+}
+
+[hidden] {
+  display: none !important;
+}
+
 html,
 body,
 #root {
@@ -9,7 +20,7 @@ body,
   padding: 0;
   font-family: 'Lato', sans-serif;
   font-weight: 400;
-  font-size: 14px;
+  font-size: 16px;
 }
 
 :root {
@@ -19,7 +30,7 @@ body,
 }
 
 #root {
-  background-color: #202124;
+  background-color: #18191c;
   color: white;
 }
 
@@ -28,23 +39,51 @@ body,
   width: 100%;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
+  grid-template-rows: auto 1fr;
   overflow: hidden;
 
-  > .timers,
-  .timer,
-  .new-timer {
-    grid-area: 1 / 1;
-    transition: transform 0.6s ease-in-out, opacity 0.3s ease-out;
+  > .app-panels {
+    grid-template-rows: 2 / -1;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    overflow: scroll;
+
+    > .app-panel {
+      grid-area: 1 / 1;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: 1fr;
+      overflow: scroll;
+    }
+
+    .timers,
+    .timer,
+    .new-timer {
+      grid-area: 1 / 1;
+      transition: transform 0.6s ease-in-out, opacity 0.3s ease-out;
+    }
+
+    .dots {
+      position: absolute;
+      top: 0;
+      right: 0;
+      width: 5rem;
+      height: 100%;
+    }
+
+    .timer:not([data-active]) {
+      display: none;
+    }
   }
 
   &[data-state='timer'] {
-    > .new-timer {
+    .new-timer {
       transform: translateY(-100%);
       opacity: 0;
     }
 
-    > .timer {
+    .timer {
       animation: slide-up 0.6s ease-in-out both;
 
       @keyframes slide-up {
@@ -58,18 +97,23 @@ body,
       }
     }
   }
+}
 
-  .dots {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 5rem;
-    height: 100%;
-  }
+.app-tabs {
+  display: flex;
+  flex-direction: row;
+  justify-content: stretch;
+  background-color: #222427;
+}
 
-  .timer:not([data-active]) {
-    display: none;
-  }
+.app-tab {
+  appearance: none;
+  background: transparent;
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
 }
 
 .dots {
@@ -99,8 +143,8 @@ body,
 
 .new-timer {
   > input {
-    grid-area: main;
-    align-self: self-start;
+    grid-area: header;
+    align-self: self-end;
     justify-self: center;
     appearance: none;
     background: transparent;
@@ -114,6 +158,7 @@ body,
       outline: none;
     }
   }
+
   > .actions {
     grid-area: actions;
   }
@@ -126,10 +171,12 @@ input[type='number']::-webkit-outer-spin-button {
 }
 
 .new-timer,
-.timer {
+.timer,
+.clock {
   display: grid;
-  grid-template-rows: 10vh 1fr 25vh;
+  grid-template-rows: 20vh 1fr 25vh;
   grid-template-areas: 'header' 'main' 'actions';
+  grid-row-gap: 1rem;
 }
 
 .timer {
@@ -313,4 +360,85 @@ header {
       opacity: 1;
     }
   }
+}
+
+.exercise {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  line-height: 1.6;
+
+  a {
+    color: var(--color-primary);
+  }
+}
+
+.description {
+  padding: 2rem;
+  overflow-y: auto;
+  border-right: 1px solid #555;
+}
+
+// .....
+
+.local {
+  align-self: self-end;
+}
+
+.localTime {
+  font-size: 5rem;
+  font-weight: normal;
+  margin: 0;
+  text-align: center;
+  color: var(--color-primary);
+}
+
+.localDate {
+  font-size: 1.5rem;
+  display: block;
+  text-align: center;
+}
+
+.foreignItem {
+  display: grid;
+  padding: 1rem;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-column-gap: 1rem;
+  grid-row-gap: 0.5rem;
+  grid-template-areas:
+    'city time'
+    'details time';
+  border-top: 1px solid #333;
+
+  > .foreignCity {
+    grid-area: city;
+  }
+  > .foreignTime {
+    grid-area: time;
+  }
+  > .foreignDetails {
+    grid-area: details;
+  }
+}
+
+.foreignCity {
+  appearance: none;
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+  padding: 0 1rem;
+  justify-self: self-start;
+  display: inline-block;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.foreignTime {
+  font-size: 2rem;
+  align-self: center;
 }
