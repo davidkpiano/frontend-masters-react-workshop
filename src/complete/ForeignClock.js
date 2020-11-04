@@ -52,10 +52,7 @@ export function ForeignClock() {
               return <option key={tz}>{tz}</option>;
             })}
           </select>
-          <strong className="foreignTime">
-            {timezone &&
-              foreignTime.toLocaleTimeString('en-US', { timeZone: timezone })}
-          </strong>
+          <strong className="foreignTime">{foreignTime || '...'}</strong>
           <div className="foreignDetails">Great!</div>
         </>
       )}
