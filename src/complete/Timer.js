@@ -1,10 +1,7 @@
 import * as React from 'react';
-import { useMemo } from 'react';
 import { faPlay, faPause, faStop } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useMachine, useService } from '@xstate/react';
-
-import { createTimerMachine } from './timerMachine';
+import { useService } from '@xstate/react';
 import { ProgressCircle } from '../ProgressCircle';
 
 export const Timer = ({ onDelete, onAdd, timerRef, ...attrs }) => {
@@ -25,13 +22,7 @@ export const Timer = ({ onDelete, onAdd, timerRef, ...attrs }) => {
       {...attrs}
     >
       <header>
-        <a
-          href="https://xstate.js.org/viz/?gist=78fef4bd3ae520709ceaee62c0dd59cd"
-          title="See the visualization"
-          target="_xstate"
-        >
-          XState Minute Timer
-        </a>
+        <strong>XState Minute Timer</strong>
       </header>
       <ProgressCircle />
       <div className="display">

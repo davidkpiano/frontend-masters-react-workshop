@@ -1,4 +1,8 @@
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@400&display=swap');
+@import './styles/exercise.scss';
+@import './styles/dots.scss';
+@import './styles/newTimer.scss';
+@import './styles/scratch.scss';
 
 *,
 *:before,
@@ -59,7 +63,7 @@ body,
 
     .timers,
     .timer,
-    .new-timer {
+    [data-screen] {
       grid-area: 1 / 1;
       transition: transform 0.6s ease-in-out, opacity 0.3s ease-out;
     }
@@ -78,8 +82,8 @@ body,
   }
 
   &[data-state='timer'] {
-    .new-timer {
-      transform: translateY(-100%);
+    [data-screen='new-timer'] {
+      transform: translateY(-50%);
       opacity: 0;
     }
 
@@ -89,7 +93,7 @@ body,
       @keyframes slide-up {
         from {
           opacity: 0;
-          transform: translateY(100%);
+          transform: translateY(50%);
         }
         50% {
           opacity: 1;
@@ -116,63 +120,15 @@ body,
   padding: 1rem 0;
 }
 
-.dots {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  transition: all 0.3s;
-
-  &[hidden] {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-}
-
-.dot {
-  height: 1rem;
-  width: 1rem;
-  border: 1px solid white;
-  border-radius: 0.5rem;
-  margin: 0.5rem 0;
-
-  &[data-active] {
-    background: white;
-  }
-}
-
-.new-timer {
-  > input {
-    grid-area: header;
-    align-self: self-end;
-    justify-self: center;
-    appearance: none;
-    background: transparent;
-    font-size: 5rem;
-    width: 10ch;
-    border: none;
-    border-bottom: 1px solid white;
-    color: white;
-    direction: rtl;
-    &:focus {
-      outline: none;
-    }
-  }
-
-  > .actions {
-    grid-area: actions;
-  }
-}
-
 input[type='number']::-webkit-inner-spin-button,
 input[type='number']::-webkit-outer-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
 
-.new-timer,
 .timer,
-.clock {
+.clock,
+[data-screen] {
   display: grid;
   grid-template-rows: 20vh 1fr 25vh;
   grid-template-areas: 'header' 'main' 'actions';
@@ -234,10 +190,12 @@ input[type='number']::-webkit-outer-spin-button {
 .actions {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-areas: 'left center right';
   align-items: center;
   justify-items: center;
 
   > button:not(.transparent) {
+    grid-area: center;
     appearance: none;
     background-color: var(--color-primary);
     color: white;
@@ -267,6 +225,7 @@ button {
   border: none;
   font-size: 1.5rem;
   cursor: pointer; // I know, I know
+  transition: transform 0.3s;
 
   &:focus {
     outline: none; // I KNOW DO NOT @ ME
@@ -274,6 +233,10 @@ button {
 
   &:disabled {
     opacity: 0.2;
+  }
+
+  &[hidden] {
+    transform: scale(0);
   }
 }
 
@@ -362,25 +325,6 @@ header {
   }
 }
 
-.exercise {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-  line-height: 1.6;
-
-  a {
-    color: var(--color-primary);
-  }
-}
-
-.description {
-  padding: 2rem;
-  overflow-y: auto;
-  border-right: 1px solid #555;
-}
-
 // .....
 
 .local {
@@ -405,12 +349,10 @@ header {
   display: grid;
   padding: 1rem;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-rows: 1fr;
   grid-column-gap: 1rem;
   grid-row-gap: 0.5rem;
-  grid-template-areas:
-    'city time'
-    'details time';
+  grid-template-areas: 'city time';
   border-top: 1px solid #333;
 
   > .foreignCity {

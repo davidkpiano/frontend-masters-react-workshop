@@ -14,6 +14,7 @@ import { Timer as Timer06 } from './06/Timer';
 import { Timer as Timer07 } from './07/Timer';
 import { TimerApp as TimerApp08 } from './08/TimerApp';
 import { TimerApp } from './complete/TimerApp';
+import { ScratchApp } from './scratch/ScratchApp';
 import { Exercise } from './Exercise';
 
 function getMarkdownLink(exercise) {
@@ -72,6 +73,11 @@ function App() {
         <Route path="/complete">
           <Exercise markdown={getMarkdownLink('complete')}>
             <TimerApp />
+          </Exercise>
+        </Route>
+        <Route path="/scratch">
+          <Exercise markdown={getMarkdownLink('scratch')}>
+            <ScratchApp />
           </Exercise>
         </Route>
       </Switch>

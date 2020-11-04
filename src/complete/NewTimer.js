@@ -19,9 +19,12 @@ export const NewTimer = ({ onSubmit, onCancel }) => {
     inputRef.current?.focus();
   }, [inputRef]);
 
+  const { duration } = state.context;
+
   return (
     <form
-      className="new-timer"
+      className="screen"
+      data-screen="new-timer"
       data-testid="new-timer"
       onSubmit={(e) => {
         e.preventDefault();
@@ -40,6 +43,8 @@ export const NewTimer = ({ onSubmit, onCancel }) => {
       <div className="actions">
         {onCancel ? (
           <button
+            type="button"
+            title="Cancel"
             className="transparent"
             onClick={() => {
               onCancel();
@@ -47,12 +52,11 @@ export const NewTimer = ({ onSubmit, onCancel }) => {
           >
             Cancel
           </button>
-        ) : (
-          <div></div>
-        )}
+        ) : null}
+
         <button
-          onClick={() => {}}
-          title={`Start ${state.context.duration} second timer`}
+          title={`Start ${duration}-second timer`}
+          hidden={duration <= 0 || undefined}
         >
           <FontAwesomeIcon icon={faPlay} />
         </button>

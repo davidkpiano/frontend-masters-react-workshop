@@ -1,70 +1,10 @@
 import * as React from 'react';
-import { createMachine, assign, spawn } from 'xstate';
 import { useMachine } from '@xstate/react';
 import { Tabs, Tab, TabList, TabPanels, TabPanel } from '@reach/tabs';
 import { NewTimer } from './NewTimer';
 import { Timer } from './Timer';
-import { createTimerMachine } from './timerMachine';
 import { Clock } from './Clock';
-
-const timerAppMachine = createMachine({
-  initial: 'new',
-  context: {
-    duration: 0,
-    currentTimer: -1,
-    timers: [],
-  },
-  states: {
-    new: {
-      on: {
-        CANCEL: 'timer',
-      },
-    },
-    timer: {
-      on: {
-        DELETE: {
-          actions: assign((ctx) => {
-            const timers = ctx.timers.slice(0, -1);
-            const currentTimer = timers.length - 1;
-
-            return {
-              timers,
-              currentTimer,
-            };
-          }),
-          target: 'deleting',
-        },
-      },
-    },
-    deleting: {
-      always: [
-        { target: 'new', cond: (ctx) => ctx.timers.length === 0 },
-        { target: 'timer' },
-      ],
-    },
-  },
-  on: {
-    ADD: {
-      target: '.timer',
-      actions: assign((ctx, event) => {
-        const newTimer = spawn(createTimerMachine(event.duration));
-
-        const timers = ctx.timers.concat(newTimer);
-
-        return {
-          timers,
-          currentTimer: timers.length - 1,
-        };
-      }),
-    },
-    CREATE: 'new',
-    SWITCH: {
-      actions: assign({
-        currentTimer: (_, event) => event.index,
-      }),
-    },
-  },
-});
+import { timerAppMachine } from './timerAppMachine';
 
 export const TimerApp = () => {
   const [state, send] = useMachine(timerAppMachine);
@@ -112,14 +52,16 @@ export const TimerApp = () => {
             })}
           </div>
           <div className="dots" hidden={!state.matches('timer')}>
-            {state.context.timers.map((timer, i) => {
+            {state.context.timers.map((_, index) => {
               return (
                 <div
                   className="dot"
-                  data-active={i === state.context.currentTimer || undefined}
-                  key={i}
+                  data-active={
+                    index === state.context.currentTimer || undefined
+                  }
+                  key={index}
                   onClick={() => {
-                    send({ type: 'SWITCH', index: i });
+                    send({ type: 'SWITCH', index: index });
                   }}
                 ></div>
               );

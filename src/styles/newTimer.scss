@@ -1,0 +1,22 @@
+[data-screen='new-timer'] {
+  > input {
+    grid-area: header;
+    align-self: self-end;
+    justify-self: center;
+    appearance: none;
+    background: transparent;
+    font-size: 5rem;
+    width: 10ch;
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+    direction: rtl;
+    &:focus {
+      outline: none;
+    }
+  }
+
+  > .actions {
+    grid-area: actions;
+  }
+}

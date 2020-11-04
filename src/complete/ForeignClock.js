@@ -3,6 +3,7 @@ import { useContext, useEffect } from 'react';
 import { useQuery } from 'react-query';
 import { LocalTimeContext } from './Clock';
 import { foreignClockMachine } from './foreignClockMachine';
+import mockTimezones from './timezones.json';
 
 export function ForeignClock() {
   const localTimeService = useContext(LocalTimeContext);
@@ -10,6 +11,7 @@ export function ForeignClock() {
   const [state, send] = useMachine(foreignClockMachine);
 
   const { data } = useQuery('timezones', () => {
+    // return Promise.resolve(mockTimezones);
     return fetch('http://worldtimeapi.org/api/timezone').then((data) =>
       data.json()
     );
@@ -28,7 +30,6 @@ export function ForeignClock() {
     send({
       type: 'LOCAL.UPDATE',
       time: localTimeState.context.time,
-      localOffset: localTimeState.context.offset,
     });
   }, [localTimeState, send]);
 
@@ -47,13 +48,14 @@ export function ForeignClock() {
               });
             }}
           >
-            <option>Select a timezone</option>
-            {state.context.timezones.map((tz) => {
-              return <option key={tz}>{tz}</option>;
+            <option disabled selected>
+              Select a timezone
+            </option>
+            {state.context.timezones.map((timezone) => {
+              return <option key={timezone}>{timezone}</option>;
             })}
           </select>
-          <strong className="foreignTime">{foreignTime || '...'}</strong>
-          <div className="foreignDetails">Great!</div>
+          <strong className="foreignTime">{foreignTime || '--'}</strong>
         </>
       )}
     </div>

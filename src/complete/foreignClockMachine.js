@@ -6,7 +6,6 @@ export const foreignClockMachine = createMachine({
     timezones: null,
     timezone: null,
     foreignTime: null,
-    foreignOffset: null,
   },
   states: {
     loadingTimezones: {

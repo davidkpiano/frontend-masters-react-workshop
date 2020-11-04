@@ -8,7 +8,7 @@ export const Exercise = ({children, markdown}) => {
   });
 
   return <div className="exercise">
-    <div className="description">
+    <div className="exerciseDescription">
       <Markdown>
 
       {data || '...'}
