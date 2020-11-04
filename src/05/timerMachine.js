@@ -21,7 +21,7 @@ export const timerMachine = createMachine({
     },
     running: {
       on: {
-        // Add a transient transition that checks if the timer is expired.
+        // Add an eventless (always) transition that checks if the timer is expired.
         // If so, go to the `expired` state.
         // ...
 

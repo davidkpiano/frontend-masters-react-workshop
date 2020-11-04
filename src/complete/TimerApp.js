@@ -11,7 +11,12 @@ export const TimerApp = () => {
   const { timers } = state.context;
 
   return (
-    <Tabs as="main" className="app" data-state={state.toStrings().join(' ')}>
+    <Tabs
+      as="main"
+      className="app"
+      data-state={state.toStrings().join(' ')}
+      defaultIndex={1}
+    >
       <TabList className="app-tabs">
         <Tab className="app-tab">Clock</Tab>
         <Tab className="app-tab">Timer</Tab>
