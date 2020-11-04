@@ -49,6 +49,9 @@ export const timerAppMachine = createMachine({
         // and append this timer to context.timers
         // ...
 
+        // Change the below line to return the updated context:
+        // - `context.timers` should contain the appended spawned timer
+        // - `context.currentTimer` should be the index of that spawned timer
         return ctx;
       }),
     },

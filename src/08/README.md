@@ -1,6 +1,12 @@
 # Exercise 08 - Spawning Actors
 
-You've made it to the final exercise!
+You've made it to the final exercise! 🎉
+
+## Goals
+
+- Learn how to `spawn()` actors dynamically and see how this can be helpful in isolating logic and state
+- In `timerAppMachine.js`, spawn a new timer machine via `createTimerMachine()` on the `ADD` action.
+- Update the `context` via `assign()` so that it has the updated `context.timers` (with the newly spawned timer appended) and `context.currentTimer` (with the index of that timer).
 
 ---
 
