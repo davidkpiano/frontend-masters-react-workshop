@@ -20,8 +20,8 @@ export const timerAppMachine = createMachine({
     timer: {
       on: {
         DELETE: {
-          actions: assign((ctx) => {
-            const timers = ctx.timers.slice(0, -1);
+          actions: assign((ctx, e) => {
+            const timers = ctx.timers.filter((_, i) => i !== e.index);
             const currentTimer = timers.length - 1;
 
             return {
