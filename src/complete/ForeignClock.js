@@ -32,7 +32,7 @@ export function ForeignClock() {
     });
   }, [localTimeState, send]);
 
-  const { timezones, timezone, foreignTime } = state.context;
+  const { timezones, foreignTime } = state.context;
 
   return (
     <div className="foreignItem">

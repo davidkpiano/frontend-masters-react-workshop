@@ -52,6 +52,7 @@ export const Timer = ({ onDelete, onAdd, timerRef, ...attrs }) => {
       <div className="actions">
         <button
           className="transparent"
+          title="Delete timer"
           onClick={() => {
             onDelete();
           }}
@@ -75,6 +76,7 @@ export const Timer = ({ onDelete, onAdd, timerRef, ...attrs }) => {
         )}
         <button
           className="transparent"
+          title="Add timer"
           onClick={() => {
             onAdd();
           }}

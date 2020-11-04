@@ -75,8 +75,6 @@ export const NewTimer = ({ onSubmit }) => {
     },
   });
 
-  console.log(state);
-
   return (
     <form
       className="new-timer"

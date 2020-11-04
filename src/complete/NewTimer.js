@@ -16,13 +16,13 @@ export const NewTimer = ({ onSubmit, onCancel }) => {
   });
 
   React.useEffect(() => {
-    console.log(inputRef);
     inputRef.current?.focus();
   }, [inputRef]);
 
   return (
     <form
       className="new-timer"
+      data-testid="new-timer"
       onSubmit={(e) => {
         e.preventDefault();
         send(e);
