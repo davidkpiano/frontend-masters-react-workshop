@@ -10,6 +10,7 @@
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^11.1.1",
     "@testing-library/user-event": "^7.1.2",
+    "@xstate/inspect": "^0.1.1",
     "@xstate/react": "^1.0.1",
     "@xstate/test": "^0.4.1",
     "react": "^16.13.1",

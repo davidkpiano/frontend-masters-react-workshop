@@ -12,8 +12,8 @@ import { Timer as Timer04 } from './04/Timer';
 import { Timer as Timer05 } from './05/Timer';
 import { Timer as Timer06 } from './06/Timer';
 import { Timer as Timer07 } from './07/Timer.final';
-import { TimerApp as TimerApp08 } from './08/TimerApp';
-import { TimerApp } from './complete/TimerApp';
+import { App as App08 } from './08/App';
+import { App as AppComplete } from './complete/App';
 import { ScratchApp } from './scratch/ScratchApp';
 import { Exercise } from './Exercise';
 
@@ -67,15 +67,15 @@ function App() {
         </Route>
         <Route path="/08">
           <Exercise markdown={getMarkdownLink('08')}>
-            <TimerApp08 />
+            <App08 />
           </Exercise>
         </Route>
         <Route path="/complete">
           <Exercise markdown={getMarkdownLink('complete')}>
-            <TimerApp />
+            <AppComplete />
           </Exercise>
         </Route>
-        <Route path="/scratch">
+        <Route path="/">
           <Exercise markdown={getMarkdownLink('scratch')}>
             <ScratchApp />
           </Exercise>

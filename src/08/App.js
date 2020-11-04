@@ -6,7 +6,7 @@ import { Timer } from './Timer';
 import { Clock } from './Clock';
 import { timerAppMachine } from './timerAppMachine';
 
-export const TimerApp = () => {
+export const App = () => {
   const [state, send] = useMachine(timerAppMachine);
   const { timers } = state.context;
 
@@ -46,7 +46,7 @@ export const TimerApp = () => {
                   key={timer.id}
                   timerRef={timer}
                   onDelete={() => {
-                    send({ type: 'DELETE', index: i });
+                    send('DELETE');
                   }}
                   onAdd={() => {
                     send('CREATE');

@@ -5,9 +5,14 @@ import { NewTimer } from './NewTimer';
 import { Timer } from './Timer';
 import { Clock } from './Clock';
 import { timerAppMachine } from './timerAppMachine';
+import { inspect } from '@xstate/inspect';
 
-export const TimerApp = () => {
-  const [state, send] = useMachine(timerAppMachine);
+// inspect({
+//   iframe: false,
+// });
+
+export const App = () => {
+  const [state, send] = useMachine(timerAppMachine, { devTools: true });
   const { timers } = state.context;
 
   return (
@@ -46,7 +51,7 @@ export const TimerApp = () => {
                   key={timer.id}
                   timerRef={timer}
                   onDelete={() => {
-                    send('DELETE');
+                    send({ type: 'DELETE', index: i });
                   }}
                   onAdd={() => {
                     send('CREATE');

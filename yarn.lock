@@ -2058,6 +2058,11 @@
   resolved "https://registry.yarnpkg.com/@xstate/graph/-/graph-1.2.0.tgz#83618bbff4f801fecb9b4f33f1d4a44e1b5a40ff"
   integrity sha512-6h8ZRmnHsg1BW2NmkM2gb1l6bJwi6SaSLi7ErFzzseLKmcQL2oWBSjHJdsdYMuD2DXFsnHbVi3WqsQE++R7nmA==
 
+"@xstate/inspect@^0.1.1":
+  version "0.1.1"
+  resolved "https://registry.yarnpkg.com/@xstate/inspect/-/inspect-0.1.1.tgz#9d7b4f66c353a30e665c759c00d700bfc707f560"
+  integrity sha512-1aRFHH8DBCud9YSc/YB5T1j2AzV86ZKrJJfMohHctLuNOsLAL++Pp6BE+FbixLyhOiP66yLFoJCY2/Gdn0j/VQ==
+
 "@xstate/react@^1.0.1":
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/@xstate/react/-/react-1.0.1.tgz#cb6d64c277b20c5357eb3fc4742feeb395759090"
