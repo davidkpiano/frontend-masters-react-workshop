@@ -1,122 +1,60 @@
 import { useMachine } from '@xstate/react';
-import { useEffect } from 'react';
-import { useQuery } from 'react-query';
+import { createContext } from 'react';
 import { assign, createMachine } from 'xstate';
+import { ForeignClock } from './ForeignClock';
 
 const clockMachine = createMachine({
-  initial: 'loadingTimezones',
+  initial: 'active',
   context: {
-    timezones: null,
-    timezone: null,
-    time: null,
-    foreignTime: null,
+    time: Date.now(),
+    offset: new Date().getTimezoneOffset() * -60,
   },
   states: {
-    loadingTimezones: {
+    active: {
+      invoke: {
+        id: 'interval',
+        src: () => (sendBack) => {
+          const interval = setInterval(() => {
+            sendBack('TICK');
+          }, 1000);
+
+          return () => {
+            clearInterval(interval);
+          };
+        },
+      },
       on: {
-        'TIMEZONES.LOADED': {
-          target: 'time',
+        TICK: {
           actions: assign({
-            timezones: (_, e) => e.data,
+            time: () => Date.now(),
           }),
         },
       },
-    },
-    time: {
-      initial: 'noTimezoneSelected',
-      states: {
-        noTimezoneSelected: {
-          on: {},
-        },
-        loadingTime: {
-          invoke: {
-            src: (ctx) =>
-              fetch(
-                `http://worldtimeapi.org/api/timezone/${ctx.timezone}`
-              ).then((res) => res.json()),
-            onDone: {
-              target: 'loaded',
-              actions: assign({
-                foreignTime: (_, e) => e.data.datetime,
-              }),
-            },
-          },
-        },
-        loaded: {},
-      },
-      on: {
-        'TIMEZONE.CHANGE': {
-          target: '.loadingTime',
-          actions: assign({
-            timezone: (_, e) => e.value,
-          }),
-        },
-        'TIMEZONE.RELOAD': '.loadingTime',
-      },
-    },
-    timeLoaded: {
-      on: {},
     },
   },
 });
 
+export const LocalTimeContext = createContext();
+
 export function Clock() {
-  const [state, send] = useMachine(clockMachine);
-  const { data } = useQuery('timezones', () => {
-    return fetch('http://worldtimeapi.org/api/timezone').then((data) =>
-      data.json()
-    );
-  });
-
-  useEffect(() => {
-    if (data) {
-      send({
-        type: 'TIMEZONES.LOADED',
-        data,
-      });
-    }
-  }, [data, send]);
-
-  const { timezones, foreignTime } = state.context;
+  const [state, send, service] = useMachine(clockMachine);
+  const { time } = state.context;
 
   return (
-    <div className="clock">
-      <div className="local">
-        <h1 className="localTime">{new Date().toLocaleTimeString('en-US')}</h1>
-        <strong className="localDate">{new Date().toLocaleDateString()}</strong>
+    <LocalTimeContext.Provider value={service}>
+      <div className="clock">
+        <div className="local">
+          <h1 className="localTime">
+            {new Date(time).toLocaleTimeString('en-US')}
+          </h1>
+          <strong className="localDate">
+            {new Date(time).toLocaleDateString()}
+          </strong>
+        </div>
+        <div className="foreign">
+          <ForeignClock />
+        </div>
       </div>
-      <div className="foreign">
-        {(state.matches('timezonesLoaded') || timezones) && (
-          <div className="foreignItem">
-            <select
-              className="foreignCity"
-              onChange={(e) => {
-                console.log(e.target.value);
-                send({
-                  type: 'TIMEZONE.CHANGE',
-                  value: e.target.value,
-                });
-              }}
-            >
-              {state.context.timezones.map((tz) => {
-                return <option key={tz}>{tz}</option>;
-              })}
-            </select>
-            <strong className="foreignTime">
-              {foreignTime && new Date(foreignTime).toLocaleTimeString('en-US')}
-            </strong>
-            <div className="foreignDetails">
-              <button
-                onClick={() => {
-                  send('TIMEZONE.RELOAD');
-                }}
-              >
-                Reload
-              </button>
-            </div>
-          </div>
-        )}
-      </div>
-    </div>
+    </LocalTimeContext.Provider>
   );
 }
