@@ -11,7 +11,7 @@ import { Timer as Timer03 } from './03/Timer';
 import { Timer as Timer04 } from './04/Timer';
 import { Timer as Timer05 } from './05/Timer';
 import { Timer as Timer06 } from './06/Timer';
-import { Timer as Timer07 } from './07/Timer.final';
+import { Timer as Timer07 } from './07/Timer';
 import { App as App08 } from './08/App';
 import { App as AppComplete } from './complete/App';
 import { ScratchApp } from './scratch';
