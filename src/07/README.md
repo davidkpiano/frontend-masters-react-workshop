@@ -1,4 +1,4 @@
-# Exercise 07
+# Exercise 07 - Invoking Actors
 
 In this exercise, we're going to move the ad-hoc interval logic that was in `useEffect` directly into the machine instead by [invoking a callback](https://xstate.js.org/docs/guides/communication.html#invoking-callbacks).
 

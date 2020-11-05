@@ -1,36 +1,12 @@
 import * as React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlay } from '@fortawesome/free-solid-svg-icons';
-import { createMachine, assign } from 'xstate';
 import { useMachine } from '@xstate/react';
+import { newTimerMachine } from './newTimerMachine';
+import { useRef } from 'react';
 
-const durationValid = (context) => {
-  return context.duration > 0;
-};
-
-const assignDuration = assign({ duration: (_, event) => +event.target.value });
-
-const newTimerMachine = createMachine({
-  initial: 'normal',
-  context: {
-    duration: 0,
-  },
-  states: {
-    normal: {
-      on: {
-        change: {
-          actions: assignDuration,
-        },
-        submit: {
-          cond: durationValid,
-          actions: 'submit',
-        },
-      },
-    },
-  },
-});
-
-export const NewTimer = ({ onSubmit }) => {
+export const NewTimer = ({ onSubmit, onCancel }) => {
+  const inputRef = useRef();
   const [state, send] = useMachine(newTimerMachine, {
     actions: {
       submit: (context) => {
@@ -39,9 +15,17 @@ export const NewTimer = ({ onSubmit }) => {
     },
   });
 
+  React.useEffect(() => {
+    inputRef.current?.focus();
+  }, [inputRef]);
+
+  const { duration } = state.context;
+
   return (
     <form
-      className="new-timer"
+      className="screen"
+      data-screen="new-timer"
+      data-testid="new-timer"
       onSubmit={(e) => {
         e.preventDefault();
         send(e);
@@ -52,14 +36,27 @@ export const NewTimer = ({ onSubmit }) => {
         min={0}
         step={1}
         placeholder="00s"
-        autoFocus
         onChange={send}
         title="Duration"
+        ref={inputRef}
       />
       <div className="actions">
+        {onCancel ? (
+          <button
+            type="button"
+            title="Cancel"
+            className="transparent"
+            onClick={() => {
+              onCancel();
+            }}
+          >
+            Cancel
+          </button>
+        ) : null}
+
         <button
-          onClick={() => {}}
-          title={`Start ${state.context.duration} second timer`}
+          title={`Start ${duration}-second timer`}
+          hidden={duration <= 0 || undefined}
         >
           <FontAwesomeIcon icon={faPlay} />
         </button>

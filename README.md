@@ -1,6 +1,6 @@
 # Frontend Masters React State Modeling Workshop
 
-Welcome to the [Frontend Masters React + XState workshop!](todo)
+Welcome to the [Frontend Masters React + XState workshop!](https://frontendmasters.com/workshops/xstate-react/)
 
 ## XState
 

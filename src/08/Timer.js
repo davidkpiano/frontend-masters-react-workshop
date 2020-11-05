@@ -1,15 +1,12 @@
 import * as React from 'react';
-import { useMemo } from 'react';
 import { faPlay, faPause, faStop } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useMachine } from '@xstate/react';
+import { useService } from '@xstate/react';
 
-import { createTimerMachine } from './timerMachine';
 import { ProgressCircle } from '../ProgressCircle';
 
-export const Timer = ({ onDelete, duration: durationProp }) => {
-  // Change from 60 to whatever the specified duration prop is
-  const [state, send] = useMachine(createTimerMachine(60));
+export const Timer = ({ onDelete, onAdd, timerRef, ...attrs }) => {
+  const [state, send] = useService(timerRef);
 
   const { duration, elapsed, interval } = state.context;
 
@@ -23,15 +20,10 @@ export const Timer = ({ onDelete, duration: durationProp }) => {
         '--elapsed': elapsed,
         '--interval': interval,
       }}
+      {...attrs}
     >
       <header>
-        <a
-          href="https://xstate.js.org/viz/?gist=78fef4bd3ae520709ceaee62c0dd59cd"
-          title="See the visualization"
-          target="_xstate"
-        >
-          XState Minute Timer
-        </a>
+        <strong>XState Minute Timer</strong>
       </header>
       <ProgressCircle />
       <div className="display">
@@ -52,8 +44,9 @@ export const Timer = ({ onDelete, duration: durationProp }) => {
       <div className="actions">
         <button
           className="transparent"
+          title="Delete timer"
           onClick={() => {
-            // ...
+            onDelete();
           }}
         >
           Delete
@@ -73,7 +66,13 @@ export const Timer = ({ onDelete, duration: durationProp }) => {
             <FontAwesomeIcon icon={faPlay} />
           </button>
         )}
-        <button className="transparent" disabled>
+        <button
+          className="transparent"
+          title="Add timer"
+          onClick={() => {
+            onAdd();
+          }}
+        >
           Add Timer
         </button>
       </div>

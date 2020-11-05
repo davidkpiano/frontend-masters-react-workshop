@@ -1,13 +1,10 @@
 import * as React from 'react';
-import { useMemo } from 'react';
 import { faPlay, faPause, faStop } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useMachine, useService } from '@xstate/react';
-
-import { createTimerMachine } from './timerMachine';
+import { useService } from '@xstate/react';
 import { ProgressCircle } from '../ProgressCircle';
 
-export const Timer = ({ onDelete, timerRef }) => {
+export const Timer = ({ onDelete, onAdd, timerRef, ...attrs }) => {
   const [state, send] = useService(timerRef);
 
   const { duration, elapsed, interval } = state.context;
@@ -22,15 +19,10 @@ export const Timer = ({ onDelete, timerRef }) => {
         '--elapsed': elapsed,
         '--interval': interval,
       }}
+      {...attrs}
     >
       <header>
-        <a
-          href="https://xstate.js.org/viz/?gist=78fef4bd3ae520709ceaee62c0dd59cd"
-          title="See the visualization"
-          target="_xstate"
-        >
-          XState Minute Timer
-        </a>
+        <strong>XState Minute Timer</strong>
       </header>
       <ProgressCircle />
       <div className="display">
@@ -51,6 +43,7 @@ export const Timer = ({ onDelete, timerRef }) => {
       <div className="actions">
         <button
           className="transparent"
+          title="Delete timer"
           onClick={() => {
             onDelete();
           }}
@@ -72,6 +65,15 @@ export const Timer = ({ onDelete, timerRef }) => {
             <FontAwesomeIcon icon={faPlay} />
           </button>
         )}
+        <button
+          className="transparent"
+          title="Add timer"
+          onClick={() => {
+            onAdd();
+          }}
+        >
+          Add Timer
+        </button>
       </div>
     </div>
   );

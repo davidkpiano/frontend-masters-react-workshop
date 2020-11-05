@@ -11,43 +11,74 @@ import { Timer as Timer03 } from './03/Timer';
 import { Timer as Timer04 } from './04/Timer';
 import { Timer as Timer05 } from './05/Timer';
 import { Timer as Timer06 } from './06/Timer';
-import { Timer as Timer07 } from './07/Timer';
-import { TimerApp as TimerApp08 } from './08/TimerApp';
-import { TimerApp } from './complete/TimerApp';
+import { Timer as Timer07 } from './07/Timer.final';
+import { App as App08 } from './08/App';
+import { App as AppComplete } from './complete/App';
+import { ScratchApp } from './scratch/ScratchApp';
+import { Exercise } from './Exercise';
+
+function getMarkdownLink(exercise) {
+  return require(`./${exercise}/README.md`).default;
+}
 
 function App() {
   return (
     <Router>
       <Switch>
         <Route path="/00">
-          <Timer00 />
+          <Exercise markdown={getMarkdownLink('00')}>
+            <Timer00 />
+          </Exercise>
         </Route>
         <Route path="/01">
-          <Timer01 />
+          <Exercise markdown={getMarkdownLink('01')}>
+            <Timer01 />
+          </Exercise>
         </Route>
         <Route path="/02">
-          <Timer02 />
+          <Exercise markdown={getMarkdownLink('02')}>
+            <Timer02 />
+          </Exercise>
         </Route>
         <Route path="/03">
-          <Timer03 />
+          <Exercise markdown={getMarkdownLink('03')}>
+            <Timer03 />
+          </Exercise>
         </Route>
         <Route path="/04">
-          <Timer04 />
+          <Exercise markdown={getMarkdownLink('04')}>
+            <Timer04 />
+          </Exercise>
         </Route>
         <Route path="/05">
-          <Timer05 />
+          <Exercise markdown={getMarkdownLink('05')}>
+            <Timer05 />
+          </Exercise>
         </Route>
         <Route path="/06">
-          <Timer06 />
+          <Exercise markdown={getMarkdownLink('06')}>
+            <Timer06 />
+          </Exercise>
         </Route>
         <Route path="/07">
-          <Timer07 />
+          <Exercise markdown={getMarkdownLink('07')}>
+            <Timer07 />
+          </Exercise>
         </Route>
         <Route path="/08">
-          <TimerApp08 />
+          <Exercise markdown={getMarkdownLink('08')}>
+            <App08 />
+          </Exercise>
         </Route>
         <Route path="/complete">
-          <TimerApp />
+          <Exercise markdown={getMarkdownLink('complete')}>
+            <AppComplete />
+          </Exercise>
+        </Route>
+        <Route path="/">
+          <Exercise markdown={getMarkdownLink('scratch')}>
+            <ScratchApp />
+          </Exercise>
         </Route>
       </Switch>
     </Router>

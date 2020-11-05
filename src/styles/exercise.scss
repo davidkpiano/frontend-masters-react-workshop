@@ -1,0 +1,30 @@
+.exercise {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+  line-height: 1.6;
+
+  a {
+    color: var(--color-primary);
+  }
+}
+
+.exerciseDescription {
+  padding: 2rem;
+  overflow-y: auto;
+  border-right: 1px solid #555;
+
+  code {
+    display: inline-block;
+    background: rgba(white, 0.2);
+    border-radius: 0.25rem;
+    padding: 0.1rem 0.25rem;
+    margin-bottom: 0.125rem;
+  }
+
+  li {
+    margin: 1rem;
+  }
+}

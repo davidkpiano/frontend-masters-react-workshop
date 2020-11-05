@@ -1,21 +1,22 @@
 import { createMachine, assign } from 'xstate';
 
-const ticker = (ctx) => (cb) => {
+const ticker = (ctx) => (sendBack) => {
   const interval = setInterval(() => {
-    cb('TICK');
+    sendBack('TICK');
   }, ctx.interval * 1000);
+
   return () => clearInterval(interval);
 };
 
 const timerExpired = (ctx) => ctx.elapsed >= ctx.duration;
 
-// This should dynamically create a machine with the given `duration`.
+// https://xstate.js.org/viz/?gist=78fef4bd3ae520709ceaee62c0dd59cd
 export const createTimerMachine = (duration) =>
   createMachine({
     id: 'timer',
-    initial: 'idle', // We want the machine to start in the 'running' state
+    initial: 'running',
     context: {
-      duration: 60, // It's hardcoded right now; fix it
+      duration,
       elapsed: 0,
       interval: 0.1,
     },

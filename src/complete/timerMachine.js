@@ -1,9 +1,10 @@
 import { createMachine, assign } from 'xstate';
 
-const ticker = (ctx) => (cb) => {
+const ticker = (ctx) => (sendBack) => {
   const interval = setInterval(() => {
-    cb('TICK');
+    sendBack('TICK');
   }, ctx.interval * 1000);
+
   return () => clearInterval(interval);
 };
 

@@ -12,19 +12,34 @@ const testTimerAppMachine = createMachine({
   },
   states: {
     newTimer: {
+      initial: 'noTimers',
+      states: {
+        noTimers: {},
+        afterDeleted: {},
+        adding: {},
+      },
       on: {
         CHANGE: {
           actions: assign({
             value: 124,
           }),
         },
-        ADD: {
+        PLAY: {
           cond: (ctx) => ctx.value > 0,
           target: 'timer',
         },
       },
+      meta: {
+        test: async ({ getByTestId }) => {
+          getByTestId('new-timer');
+        },
+      },
     },
     timer: {
+      on: {
+        DELETE: 'newTimer.afterDeleted',
+        ADD: 'newTimer.adding',
+      },
       meta: {
         test: async ({ getByText }, state) => {
           getByText(/XState Minute Timer/i);
@@ -42,9 +57,23 @@ const testTimerAppModel = createModel(testTimerAppMachine).withEvents({
       fireEvent.change(input, { target: { value: '124' } });
     },
   },
-  ADD: {
+  PLAY: {
     exec: async ({ getByTitle }) => {
       const addButton = getByTitle(/Start .* timer/i);
+
+      fireEvent.click(addButton);
+    },
+  },
+  DELETE: {
+    exec: async ({ getByTitle }) => {
+      const deleteButton = getByTitle(/Delete/i);
+
+      fireEvent.click(deleteButton);
+    },
+  },
+  ADD: {
+    exec: async ({ getByTitle }) => {
+      const addButton = getByTitle(/Add/i);
 
       fireEvent.click(addButton);
     },
