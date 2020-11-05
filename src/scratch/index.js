@@ -1,7 +1,6 @@
-import React, { useReducer, useState } from 'react';
+import React, { useReducer, useState, useEffect } from 'react';
 import { createMachine } from 'xstate';
 import { useMachine } from '@xstate/react';
-import { useEffect } from 'react/cjs/react.development';
 
 const initialState = 'pending';
 
