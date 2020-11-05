@@ -1,6 +1,6 @@
 # Exercise 08 - Spawning Actors
 
-You've made it to the final exercise! 🎉
+You've made it to the final exercise! 🎉 We'll learn how to _distribute_ state in localized, private little entities called [actors](https://xstate.js.org/docs/guides/actors.html).
 
 ## Goals
 
