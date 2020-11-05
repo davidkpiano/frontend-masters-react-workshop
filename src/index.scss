@@ -33,6 +33,7 @@ body,
   --color-primary-light: hsla(214, 75%, 72%, 1);
   --color-secondary: #8b9096;
   --color-gray: #373b41;
+  --color-dark-gray: #25272a;
 }
 
 #root {
@@ -109,7 +110,7 @@ body,
   display: flex;
   flex-direction: row;
   justify-content: stretch;
-  background-color: var(--color-gray);
+  background-color: var(--color-dark-gray);
 }
 
 .app-tab {
@@ -120,6 +121,11 @@ body,
   justify-content: center;
   align-items: center;
   padding: 1rem 0;
+  border-bottom: 0.25rem solid transparent;
+
+  &[data-selected] {
+    border-color: var(--color-primary);
+  }
 }
 
 input[type='number']::-webkit-inner-spin-button,

@@ -16,8 +16,10 @@
   --height: 1rem;
   --color-current: white;
   height: var(--height);
+  width: calc(var(--height) * 2);
   background: var(--color-gray);
   border-radius: var(--height);
+  cursor: pointer;
 
   &:before {
     content: '';
@@ -28,9 +30,13 @@
     width: var(--height);
     border-radius: var(--height);
     background: var(--color-current);
+    transition: all 0.3s;
   }
 
-  &[data-state='active'] {
+  &[data-active] {
     --color-current: var(--color-primary);
+    &:before {
+      transform: translateX(100%);
+    }
   }
 }

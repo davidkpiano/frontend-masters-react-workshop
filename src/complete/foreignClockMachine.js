@@ -27,9 +27,7 @@ export const foreignClockMachine = createMachine({
             'LOCAL.UPDATE': {
               actions: assign({
                 foreignTime: (ctx, event) => {
-                  return new Date(event.time).toLocaleTimeString('en-US', {
-                    timeZone: ctx.timezone,
-                  });
+                  return new Date(event.time);
                 },
               }),
             },
@@ -41,9 +39,7 @@ export const foreignClockMachine = createMachine({
           target: '.timezoneSelected',
           actions: assign((ctx, e) => ({
             timezone: e.value,
-            foreignTime: new Date().toLocaleTimeString('en-US', {
-              timeZone: e.value,
-            }),
+            foreignTime: new Date(),
           })),
         },
       },

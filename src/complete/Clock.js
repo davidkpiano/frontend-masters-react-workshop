@@ -13,7 +13,12 @@ export function Clock() {
     <LocalTimeContext.Provider value={service}>
       <div className="clock">
         <div className="local">
-          <h1 className="localTime">{time.toLocaleTimeString('en-US')}</h1>
+          <h1 className="localTime">
+            {time.toLocaleTimeString('en-US', {
+              hour: '2-digit',
+              minute: '2-digit',
+            })}
+          </h1>
           <strong className="localDate">{time.toLocaleDateString()}</strong>
         </div>
         <div className="foreign">

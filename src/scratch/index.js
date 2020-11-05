@@ -6,7 +6,12 @@ export const ScratchApp = () => {
   return (
     <div className="scratch">
       <div className="alarm">
-        <div className="alarmTime">2:16 PM</div>
+        <div className="alarmTime">
+          {new Date().toLocaleTimeString('en-US', {
+            hour: '2-digit',
+            minute: '2-digit',
+          })}
+        </div>
         <div className="alarmToggle" data-active></div>
       </div>
     </div>

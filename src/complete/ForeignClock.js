@@ -33,7 +33,13 @@ export function ForeignClock() {
     });
   }, [localTimeState, send]);
 
-  const { timezones, foreignTime } = state.context;
+  const { timezones, foreignTime, timezone } = state.context;
+
+  const formattedTime = foreignTime?.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZone: timezone,
+  });
 
   return (
     <div className="foreignItem">
@@ -55,7 +61,7 @@ export function ForeignClock() {
               return <option key={timezone}>{timezone}</option>;
             })}
           </select>
-          <strong className="foreignTime">{foreignTime || '--'}</strong>
+          <strong className="foreignTime">{formattedTime || '--'}</strong>
         </>
       )}
     </div>
