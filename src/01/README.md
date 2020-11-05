@@ -5,6 +5,6 @@ In this exercise, we're going to take the machine you created and use it within 
 ## Goals
 
 - Install `xstate` and `@xstate/react`
-- In [`timerMachine.js`](./timerMachine.js), use `createMachine(...)` to create a state machine in XState.
-- In [`Timer.js`](./Timer.js), use the `useMachine(...)` hook with that created machine. This should feel just like `useReducer`
+- In `timerMachine.js`, use `createMachine(...)` to create a state machine in XState.
+- In `Timer.js`, use the `useMachine(...)` hook with that created machine. This should feel just like `useReducer`
 - The finite state value is now in `state.value`, so use that instead of `state`.
