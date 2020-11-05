@@ -2,9 +2,7 @@ import React, { useReducer, useState, useEffect } from 'react';
 import { createMachine } from 'xstate';
 import { useMachine } from '@xstate/react';
 
-const initialState = 'pending';
-
-const alarmMachine = {
+const alarmMachine = createMachine({
   initial: 'inactive',
   states: {
     inactive: {
@@ -24,21 +22,17 @@ const alarmMachine = {
       },
     },
   },
-};
-
-const alarmReducer = (state, event) => {
-  const nextState = alarmMachine.states[state].on[event.type] || state;
-
-  return nextState;
-};
+});
 
 export const ScratchApp = () => {
-  const [status, dispatch] = useReducer(alarmReducer, initialState);
+  const [state, send] = useMachine(alarmMachine);
+
+  const status = state.value;
 
   useEffect(() => {
     if (status === 'pending') {
       const timeout = setTimeout(() => {
-        dispatch({ type: 'SUCCESS' });
+        send('SUCCESS');
       }, 2000);
 
       return () => {
@@ -63,7 +57,7 @@ export const ScratchApp = () => {
             opacity: status === 'pending' ? 0.5 : 1,
           }}
           onClick={() => {
-            dispatch({ type: 'TOGGLE' });
+            send('TOGGLE');
           }}
         ></div>
       </div>
