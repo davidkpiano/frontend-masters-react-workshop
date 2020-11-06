@@ -3,7 +3,7 @@ import * as React from 'react';
 import { createModel } from '@xstate/test';
 import { createMachine, assign } from 'xstate';
 import { render, fireEvent, cleanup } from '@testing-library/react';
-import { TimerApp } from './complete/TimerApp';
+import { App } from './complete/App';
 
 const testTimerAppMachine = createMachine({
   initial: 'newTimer',
@@ -31,7 +31,7 @@ const testTimerAppMachine = createMachine({
       },
       meta: {
         test: async ({ getByTestId }) => {
-          getByTestId('new-timer');
+          getByTestId('new-timer'); // [data-testid="new-timer"]
         },
       },
     },
@@ -89,7 +89,7 @@ describe('something', () => {
 
       plan.paths.forEach((path) => {
         it(path.description, () => {
-          const rendered = render(<TimerApp />);
+          const rendered = render(<App />);
 
           return path.test(rendered);
         });
