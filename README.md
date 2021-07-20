@@ -2,6 +2,8 @@
 
 Welcome to the [Frontend Masters React + XState workshop!](https://frontendmasters.com/workshops/xstate-react/)
 
+🆕 Using Svelte? Check out the [Svelte port of this workshop!](https://github.com/annaghi/xstate-svelte-workshop)
+
 ## XState
 
 - GitHub repo: https://github.com/davidkpiano/xstate
