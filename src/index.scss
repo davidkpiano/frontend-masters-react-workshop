@@ -305,7 +305,7 @@ circle {
   --interval-duration: calc(var(--interval) * 1s);
   transition: stroke-dashoffset var(--interval-duration) linear;
   stroke: var(--color-primary);
-  stroke-dashoffset: calc(1 - var(--progress) * -1);
+  stroke-dashoffset: calc(1px - var(--progress) * -1px);
   stroke-dasharray: 1 1;
   stroke-width: 1.1px;
 }
