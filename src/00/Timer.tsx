@@ -1,15 +1,19 @@
-// @ts-nocheck
-import * as React from 'react';
-import { useReducer } from 'react';
-import { faPlay, faPause } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { ProgressCircle } from '../ProgressCircle';
-
-// Import the timer machine and its initial state:
-// import { ... } from './timerMachine';
+import { useReducer } from "react";
+import { faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { ProgressCircle } from "../ProgressCircle";
+import {
+  timerMachine,
+  EventType,
+  StateType,
+  timerMachineConfig,
+} from "./timerMachine";
 
 export const Timer = () => {
-  const state = ''; // delete me - useReducer instead!
+  const [status, dispatch] = useReducer(
+    timerMachine,
+    timerMachineConfig.initial
+  );
 
   const { duration, elapsed, interval } = {
     duration: 60,
@@ -20,12 +24,12 @@ export const Timer = () => {
   return (
     <div
       className="timer"
-      data-state={state}
+      data-state={status}
       style={{
         // @ts-expect-error
-        '--duration': duration,
-        '--elapsed': elapsed,
-        '--interval': interval,
+        "--duration": duration,
+        "--elapsed": elapsed,
+        "--interval": interval,
       }}
     >
       <header>
@@ -33,11 +37,12 @@ export const Timer = () => {
       </header>
       <ProgressCircle />
       <div className="display">
-        <div className="label">{state}</div>
+        <div className="label">{status}</div>
         <div
           className="elapsed"
           onClick={() => {
-            // ...
+            if (status === StateType.paused)
+              dispatch({ type: EventType.TOGGLE });
           }}
         >
           {Math.ceil(duration - elapsed)}
@@ -45,7 +50,7 @@ export const Timer = () => {
         <div className="controls">
           <button
             onClick={() => {
-              // ...
+              dispatch({ type: EventType.RESET });
             }}
           >
             Reset
@@ -53,22 +58,25 @@ export const Timer = () => {
         </div>
       </div>
       <div className="actions">
-        <button
-          onClick={() => {
-            // ...
-          }}
-          title="Pause timer"
-        >
-          <FontAwesomeIcon icon={faPause} />
-        </button>
-        <button
-          onClick={() => {
-            // ...
-          }}
-          title="Start timer"
-        >
-          <FontAwesomeIcon icon={faPlay} />
-        </button>
+        {status === StateType.running ? (
+          <button
+            onClick={() => {
+              dispatch({ type: EventType.TOGGLE });
+            }}
+            title="Pause timer"
+          >
+            <FontAwesomeIcon icon={faPause} />
+          </button>
+        ) : (
+          <button
+            onClick={() => {
+              dispatch({ type: EventType.TOGGLE });
+            }}
+            title="Start timer"
+          >
+            <FontAwesomeIcon icon={faPlay} />
+          </button>
+        )}
       </div>
     </div>
   );
