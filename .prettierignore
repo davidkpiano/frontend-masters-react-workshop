@@ -1,0 +1,12 @@
+# We extend eslintignore
+build
+dist
+**/generated/**
+**/caches/**
+**/mocks.json
+
+
+pnpm-lock.yaml
+
+# We don't want to format package.json as it re-formats when modified via pnpm
+package.json

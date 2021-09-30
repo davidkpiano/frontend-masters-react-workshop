@@ -1,0 +1,16 @@
+{
+  "extends": "tsconfig.json",
+  "include": ["src/**/*"],
+  "compilerOptions": {
+    "baseUrl": "./src",
+    "lib": ["dom", "esnext"],
+    "noEmit": true,
+    "jsx": "preserve",
+    "noImplicitAny": false,
+    "allowJs": true,
+    "isolatedModules": true,
+    "target": "esnext",
+    "keyofStringsOnly": true,
+    "types": ["googlemaps", "markerclustererplus", "jest"]
+  }
+}

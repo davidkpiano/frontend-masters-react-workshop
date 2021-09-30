@@ -1,3 +1,5 @@
+This is a fork of davidkpiano's frontend-masters-react-workshop, with TS support and the latest XState deps
+
 # Frontend Masters React State Modeling Workshop
 
 Welcome to the [Frontend Masters React + XState workshop!](https://frontendmasters.com/workshops/xstate-react/)
