@@ -45,5 +45,8 @@
   },
   "devDependencies": {
     "sass": "^1.42.1"
+  },
+  "engines": {
+    "node": "16"
   }
 }
